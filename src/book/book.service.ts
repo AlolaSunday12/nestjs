@@ -36,4 +36,9 @@ export class BookService {
     });
     return res;
   }
+
+  async deleteById(id: string): Promise<Book> {
+    const res = await this.bookModel.findByIdAndDelete(id);
+    return res;
+  }
 }
