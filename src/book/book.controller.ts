@@ -14,7 +14,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 
-@Controller('book')
+@Controller('books')
 export class BookController {
   constructor(private bookService: BookService) {}
 
