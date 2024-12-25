@@ -2,9 +2,7 @@ import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { Category } from '../schemas/book.schema';
 //import { BookSchema } from '../schemas/book.schema';
 
-
 export class CreateBookDto {
-
   @IsNotEmpty()
   @IsString()
   readonly title: string;
