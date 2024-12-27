@@ -1,6 +1,6 @@
 import {
+  IsEmpty,
   IsEnum,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -28,6 +28,6 @@ export class UpdateBookDto {
   @IsEnum(Category, { message: 'please type correct Category.' })
   readonly category: Category;
 
-  @IsNotEmpty({ message: 'You can not pass user id.' })
+  @IsEmpty({ message: 'You can not pass user id.' })
   readonly user: User;
 }
