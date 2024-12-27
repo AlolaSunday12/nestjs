@@ -7,8 +7,6 @@ import {
 } from 'class-validator';
 import { Category } from '../schemas/book.schema';
 import { User } from '../../auth/schemas/user.schema';
-//import { isEmpty } from 'rxjs';
-//import { BookSchema } from '../schemas/book.schema';
 
 export class CreateBookDto {
   @IsNotEmpty()
