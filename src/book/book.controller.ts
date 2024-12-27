@@ -16,8 +16,6 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 import { AuthGuard } from '@nestjs/passport';
-//import { user } from '../auth/schemas/user.schema';
-//import { Request } from 'express';
 
 @Controller('books')
 export class BookController {
@@ -35,7 +33,6 @@ export class BookController {
     book: CreateBookDto,
     @Req() req,
   ): Promise<Book> {
-    //console.log(req.user);
     return this.bookService.create(book, req.user);
   }
 
