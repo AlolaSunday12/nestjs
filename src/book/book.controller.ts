@@ -25,7 +25,7 @@ export class BookController {
   constructor(private bookService: BookService) {}
 
   @Get()
-  @Roles(Role.Editor, Role.Admin)
+  @Roles(Role.Editor, Role.Admin, Role.User)
   @UseGuards(AuthGuard(), RolesGuard)
   async getAllBooks(@Query() query: ExpressQuery): Promise<Book[]> {
     return this.bookService.findAll(query);
