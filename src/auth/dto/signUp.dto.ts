@@ -21,5 +21,5 @@ export class SignUpDto {
   readonly password: string;
 
   @IsOptional()
-  readonly role: string[]
+  readonly role: string[];
 }
