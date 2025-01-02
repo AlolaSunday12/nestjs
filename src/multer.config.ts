@@ -15,8 +15,8 @@ export const multerOptions = {
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
       return cb(
         new Error('Invalid file type. Only image files are allowed.'),
-        false
-      )
+        false,
+      );
     }
     cb(null, true);
   },
