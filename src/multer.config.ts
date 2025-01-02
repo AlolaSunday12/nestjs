@@ -1,5 +1,6 @@
 import { diskStorage } from 'multer';
 
+// multer configuration
 export const multerOptions = {
   storage: diskStorage({
     destination: './uploads',
