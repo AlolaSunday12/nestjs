@@ -71,4 +71,25 @@ export class BookService {
     const res = await this.bookModel.findByIdAndDelete(id);
     return res;
   }
+
+  async uploadImages(id: string, files: Array<Express.Multer.File>) {
+    const book = await this.bookModel.findById(id);
+  
+    if (!book) {
+      throw new NotFoundException('Book not found.');
+    }
+  
+    const images = files.map((file) => ({
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+      data: file.buffer, // Store as Binary data in MongoDB
+    }));
+  
+    book.images = images;
+  
+    await book.save();
+
+    return book;
+  }
+
 }
