@@ -72,24 +72,23 @@ export class BookService {
     return res;
   }
 
-  async uploadImages(id: string, files: Array<Express.Multer.File>) {
-    const book = await this.bookModel.findById(id);
+  async uploadImages(bookId: string, files: Array<Express.Multer.File>) {
+    const book = await this.bookModel.findById(bookId);
   
     if (!book) {
       throw new NotFoundException('Book not found.');
     }
   
-    const images = files.map((file) => ({
-      originalname: file.originalname,
-      mimetype: file.mimetype,
-      data: file.buffer, // Store as Binary data in MongoDB
-    }));
+    // Generate image URLs
+    const imageUrls: string[] = files.map((file) => {
+      return `http://localhost:3000/uploads/${file.originalname}`; // Example URL
+    });
   
-    book.images = images;
-  
+    // Save image URLs to the book document
+    book.images = imageUrls;
     await book.save();
-
+  
     return book;
-  }
+  }  
 
 }
