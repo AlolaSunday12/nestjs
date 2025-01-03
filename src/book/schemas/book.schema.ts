@@ -28,18 +28,8 @@ export class Book {
   @Prop()
   category: Category;
 
-  @Prop([
-    {
-      originalname: { type: String },
-      mimetype: { type: String },
-      data: { type: Buffer }, // Binary data for the image
-    },
-  ])
-  images?: {
-    originalname: string;
-    mimetype: string;
-    data: Buffer;
-  }[];
+  @Prop({ type: [String] }) // Define images as an array of strings
+  images?: string[];
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
