@@ -4,12 +4,14 @@ import {
   Delete,
   Get,
   HttpStatus,
+  NotFoundException,
   Param,
   ParseFilePipeBuilder,
   Post,
   Put,
   Query,
   Req,
+  Res,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -24,6 +26,9 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
+import { join } from 'path';
+import * as fs from 'fs';
 
 @Controller('books')
 export class BookController {
@@ -72,28 +77,37 @@ export class BookController {
     return this.bookService.deleteById(id);
   }
 
-  @Put('upload/:id')
-  @UseGuards(AuthGuard())
-  @UseInterceptors(FilesInterceptor('files'))
-  async uploadImages(
-    @Param('id') id: string,
-    @UploadedFiles(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: /(jpg|jpeg|png)$/,
-        })
-        .addMaxSizeValidator({
-          maxSize: 1000 * 1000,
-          message: 'File size must be less than 1MB',
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
-    )
-    files: Array<Express.Multer.File>,
-  ) {
-    console.log('Uploaded Files:', files);
+  @Put('upload/:bookId')
+@UseGuards(AuthGuard())
+@UseInterceptors(FilesInterceptor('files'))
+async uploadImages(
+  @Param('bookId') bookId: string, // Ensure this matches the service parameter
+  @UploadedFiles(
+    new ParseFilePipeBuilder()
+      .addFileTypeValidator({
+        fileType: /(jpg|jpeg|png)$/,
+      })
+      .addMaxSizeValidator({
+        maxSize: 1000 * 1000, // 1MB
+        message: 'File size must be less than 1MB',
+      })
+      .build({
+        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+      }),
+  )
+  files: Array<Express.Multer.File>,
+) {
+  return this.bookService.uploadImages(bookId, files);
+}
 
-    return this.bookService.uploadImages(id, files);
+@Get('image/:filename')
+  async getImage(@Param('filename') filename: string, @Res() res: Response) {
+    const filePath = join(process.cwd(), 'uploads', filename); // Ensure correct path
+
+    if (!fs.existsSync(filePath)) {
+      throw new NotFoundException('Image not found');
+    }
+
+    res.sendFile(filePath);
   }
 }
