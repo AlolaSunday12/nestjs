@@ -78,27 +78,27 @@ export class BookController {
   }
 
   @Put('upload/:bookId')
-@UseGuards(AuthGuard())
-@UseInterceptors(FilesInterceptor('files'))
-async uploadImages(
-  @Param('bookId') bookId: string, // Ensure this matches the service parameter
-  @UploadedFiles(
-    new ParseFilePipeBuilder()
-      .addFileTypeValidator({
-        fileType: /(jpg|jpeg|png)$/,
-      })
-      .addMaxSizeValidator({
-        maxSize: 1000 * 1000, // 1MB
-        message: 'File size must be less than 1MB',
-      })
-      .build({
-        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-      }),
-  )
-  files: Array<Express.Multer.File>,
-) {
-  return this.bookService.uploadImages(bookId, files);
-}
+  @UseGuards(AuthGuard())
+  @UseInterceptors(FilesInterceptor('files'))
+  async uploadImages(
+    @Param('bookId') bookId: string, // Ensure this matches the service parameter
+    @UploadedFiles(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: /(jpg|jpeg|png)$/,
+        })
+        .addMaxSizeValidator({
+          maxSize: 1000 * 1000, // 1MB
+          message: 'File size must be less than 1MB',
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    files: Array<Express.Multer.File>,
+  ) {
+    return this.bookService.uploadImages(bookId, files);
+  }
 
 @Get('image/:filename')
   async getImage(@Param('filename') filename: string, @Res() res: Response) {
