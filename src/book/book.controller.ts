@@ -27,8 +27,9 @@ import { Role } from '../auth/enums/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
-import { join } from 'path';
+import { extname, join } from 'path';
 import * as fs from 'fs';
+import { diskStorage } from 'multer';
 
 @Controller('books')
 export class BookController {
@@ -78,28 +79,27 @@ export class BookController {
   }
 
   @Put('upload/:bookId')
-  @UseGuards(AuthGuard())
-  @UseInterceptors(FilesInterceptor('files'))
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      storage: diskStorage({
+        destination: './public/uploads',
+        filename: (req, file, callback) => {
+          const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+          const fileExt = extname(file.originalname);
+          const filename = `${file.fieldname}-${uniqueSuffix}${fileExt}`;
+          console.log(`Saving file: ${file.originalname} as ${filename}`);
+          callback(null, filename);
+        },
+      }),
+    }),
+  )
   async uploadImages(
-    @Param('bookId') bookId: string, // Ensure this matches the service parameter
-    @UploadedFiles(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: /(jpg|jpeg|png)$/,
-        })
-        .addMaxSizeValidator({
-          maxSize: 1000 * 1000, // 1MB
-          message: 'File size must be less than 1MB',
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
-    )
-    files: Array<Express.Multer.File>,
+    @Param('bookId') bookId: string,
+    @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
     return this.bookService.uploadImages(bookId, files);
   }
-
+/*
 @Get('image/:filename')
   async getImage(@Param('filename') filename: string, @Res() res: Response) {
     const filePath = join(process.cwd(), 'uploads', filename); // Ensure correct path
@@ -110,4 +110,5 @@ export class BookController {
 
     res.sendFile(filePath);
   }
+    */
 }
