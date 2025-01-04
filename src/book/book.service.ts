@@ -79,16 +79,27 @@ export class BookService {
       throw new NotFoundException('Book not found.');
     }
   
-    // Generate image URLs
-    const imageUrls: string[] = files.map((file) => {
-      return `http://localhost:3000/uploads/${file.originalname}`; // Example URL
+    console.log('Files to process:', files); // Debugging
+  
+    const imageUrls = files.map((file) => {
+      if (!file.filename) {
+        console.error(`Filename missing for file: ${file.originalname}`);
+        return null;
+      }
+      const url = `http://localhost:3000/uploads/${file.filename}`;
+      console.log(`Generated URL for file: ${file.filename} => ${url}`);
+      return url;
     });
   
-    // Save image URLs to the book document
+    if (imageUrls.includes(null)) {
+      throw new Error('Some files were not saved to disk properly.');
+    }
+  
     book.images = imageUrls;
     await book.save();
   
     return book;
-  }  
+  }
+  
 
 }
