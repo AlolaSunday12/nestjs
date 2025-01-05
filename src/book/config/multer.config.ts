@@ -3,7 +3,7 @@ import { extname } from 'path';
 
 export const multerConfig = {
   storage: diskStorage({
-    destination: './public/uploads', // Ensure this folder exists
+    destination: './public/uploads',
     filename: (req, file, callback) => {
       // Generate a unique suffix based on the current timestamp and random number
       const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -17,7 +17,7 @@ export const multerConfig = {
       // Construct the final filename
       const filename = `files-${baseName}-${uniqueSuffix}${fileExt}`;
 
-      console.log(`Saving file: ${file.originalname} as ${filename}`); // Debugging output
+      console.log(`Saving file: ${file.originalname} as ${filename}`);
       callback(null, filename);
     },
   }),
