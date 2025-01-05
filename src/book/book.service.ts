@@ -74,13 +74,13 @@ export class BookService {
 
   async uploadImages(bookId: string, files: Array<Express.Multer.File>) {
     const book = await this.bookModel.findById(bookId);
-  
+
     if (!book) {
       throw new NotFoundException('Book not found.');
     }
-  
+
     console.log('Files to process:', files); // Debugging
-  
+
     const imageUrls = files.map((file) => {
       if (!file.filename) {
         console.error(`Filename missing for file: ${file.originalname}`);
@@ -90,16 +90,10 @@ export class BookService {
       console.log(`Generated URL for file: ${file.filename} => ${url}`);
       return url;
     });
-  
-    if (imageUrls.includes(null)) {
-      throw new Error('Some files were not saved to disk properly.');
-    }
-  
+
     book.images = imageUrls;
     await book.save();
-  
+
     return book;
   }
-  
-
 }
