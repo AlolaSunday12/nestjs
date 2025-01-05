@@ -79,8 +79,7 @@ export class BookService {
       throw new NotFoundException('Book not found.');
     }
 
-    console.log('Files to process:', files); // Debugging
-
+    console.log('Files to process:', files);
     const imageUrls = files.map((file) => {
       if (!file.filename) {
         console.error(`Filename missing for file: ${file.originalname}`);
