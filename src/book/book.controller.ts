@@ -84,7 +84,7 @@ export class BookController {
   @UseGuards(AuthGuard())
   @UseInterceptors(FilesInterceptor('files', 10, multerConfig))
   async uploadImages(
-    @Param('bookId') bookId: string, // Ensure this matches the service parameter
+    @Param('bookId') bookId: string,
     @UploadedFiles(
       new ParseFilePipeBuilder()
         .addMaxSizeValidator({
@@ -99,17 +99,4 @@ export class BookController {
   ) {
     return this.bookService.uploadImages(bookId, files);
   }
-
-/*
-@Get('image/:filename')
-  async getImage(@Param('filename') filename: string, @Res() res: Response) {
-    const filePath = join(process.cwd(), 'uploads', filename); // Ensure correct path
-
-    if (!fs.existsSync(filePath)) {
-      throw new NotFoundException('Image not found');
-    }
-
-    res.sendFile(filePath);
-  }
-  */
 }
