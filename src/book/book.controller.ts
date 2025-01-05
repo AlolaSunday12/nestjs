@@ -30,6 +30,8 @@ import { Response } from 'express';
 import { extname, join } from 'path';
 import * as fs from 'fs';
 import { diskStorage } from 'multer';
+import { multerConfig } from './config/multer.config';
+//import { multer.config } from './multer.config'
 
 @Controller('books')
 export class BookController {
@@ -79,26 +81,25 @@ export class BookController {
   }
 
   @Put('upload/:bookId')
-  @UseInterceptors(
-    FilesInterceptor('files', 10, {
-      storage: diskStorage({
-        destination: './public/uploads',
-        filename: (req, file, callback) => {
-          const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-          const fileExt = extname(file.originalname);
-          const filename = `${file.fieldname}-${uniqueSuffix}${fileExt}`;
-          console.log(`Saving file: ${file.originalname} as ${filename}`);
-          callback(null, filename);
-        },
-      }),
-    }),
-  )
+  @UseGuards(AuthGuard())
+  @UseInterceptors(FilesInterceptor('files', 10, multerConfig))
   async uploadImages(
-    @Param('bookId') bookId: string,
-    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Param('bookId') bookId: string, // Ensure this matches the service parameter
+    @UploadedFiles(
+      new ParseFilePipeBuilder()
+        .addMaxSizeValidator({
+          maxSize: 1000 * 1000, // 1MB
+          message: 'File size must be less than 1MB',
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    files: Array<Express.Multer.File>,
   ) {
     return this.bookService.uploadImages(bookId, files);
   }
+
 /*
 @Get('image/:filename')
   async getImage(@Param('filename') filename: string, @Res() res: Response) {
@@ -110,5 +111,5 @@ export class BookController {
 
     res.sendFile(filePath);
   }
-    */
+  */
 }
