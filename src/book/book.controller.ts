@@ -4,14 +4,12 @@ import {
   Delete,
   Get,
   HttpStatus,
-  NotFoundException,
   Param,
   ParseFilePipeBuilder,
   Post,
   Put,
   Query,
   Req,
-  Res,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -26,12 +24,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { Response } from 'express';
-import { extname, join } from 'path';
-import * as fs from 'fs';
-import { diskStorage } from 'multer';
 import { multerConfig } from './config/multer.config';
-//import { multer.config } from './multer.config'
 
 @Controller('books')
 export class BookController {
