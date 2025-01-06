@@ -25,11 +25,14 @@ import { Role } from '../auth/enums/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerConfig } from './config/multer.config';
+import { SkipThrottle, Throttle } from '@nestjs/throttler';
 
 @Controller('books')
 export class BookController {
   constructor(private bookService: BookService) {}
 
+  //@SkipThrottle()
+  @Throttle({ default: { ttl: 2000, limit: 1 }})
   @Get()
   @Roles(Role.Editor, Role.Admin, Role.User)
   @UseGuards(AuthGuard(), RolesGuard)
