@@ -28,7 +28,7 @@ export class Book {
   @Prop()
   category: Category;
 
-  @Prop({ type: [String] }) // Define images as an array of strings
+  @Prop({ type: [String] })
   images?: string[];
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
