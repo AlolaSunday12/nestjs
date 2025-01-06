@@ -78,15 +78,11 @@ export class BookService {
     if (!book) {
       throw new NotFoundException('Book not found.');
     }
-
-    console.log('Files to process:', files);
     const imageUrls = files.map((file) => {
       if (!file.filename) {
-        console.error(`Filename missing for file: ${file.originalname}`);
         return null;
       }
       const url = `http://localhost:3000/uploads/${file.filename}`;
-      console.log(`Generated URL for file: ${file.filename} => ${url}`);
       return url;
     });
 
