@@ -16,8 +16,6 @@ export const multerConfig = {
 
       // Construct the final filename
       const filename = `files-${baseName}-${uniqueSuffix}${fileExt}`;
-
-      console.log(`Saving file: ${file.originalname} as ${filename}`);
       callback(null, filename);
     },
   }),
@@ -25,7 +23,6 @@ export const multerConfig = {
   fileFilter: (req, file, callback) => {
     // Only allow image files
     if (!/(jpg|jpeg|png|gif)$/.test(file.mimetype)) {
-      console.error(`Invalid file type: ${file.mimetype}`);
       return callback(new Error('Only image files are allowed!'), false);
     }
     callback(null, true);
