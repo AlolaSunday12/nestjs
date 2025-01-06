@@ -32,7 +32,7 @@ export class BookController {
   constructor(private bookService: BookService) {}
 
   //@SkipThrottle()
-  @Throttle({ default: { ttl: 2000, limit: 1 }})
+  @Throttle({ default: { ttl: 2000, limit: 1 } })
   @Get()
   @Roles(Role.Editor, Role.Admin, Role.User)
   @UseGuards(AuthGuard(), RolesGuard)
