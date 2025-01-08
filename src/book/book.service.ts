@@ -16,7 +16,7 @@ export class BookService {
     private bookModel: mongoose.Model<Book>,
   ) {}
 
-  // fiadAll
+  // findAll
   async findAll(query: Query): Promise<Book[]> {
     // Pagination
     const resPerPage = 2;
