@@ -57,6 +57,32 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+# Post Routes for registration
+$ /auth/signup
+
+# Get Routes for login
+$ /auth/login
+
+# Post Routes to post contents of the books to database
+$ /books
+
+# Get Routes to retrieve contents of the books in database
+$ /books
+
+# Put Routes to update the contents of a single book in database
+$ /books/:id
+
+# Get Routes to get the contents of a single book
+$ /books/:id
+
+# Delete Routes to deletes contents of a single book
+$ /books/:id
+
+# Put Routes to update a book with images
+$ /books/upload/:id
+
+
 ```
 
 ## Deployment
