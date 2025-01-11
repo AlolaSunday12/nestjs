@@ -58,6 +58,8 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 
+## Routes
+
 # Post Routes for registration
 $ /auth/signup
 
