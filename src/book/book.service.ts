@@ -38,6 +38,7 @@ export class BookService {
     return books;
   }
 
+  // Create a book
   async create(book: Book, user: User): Promise<Book> {
     const data = Object.assign(book, { user: user._id });
 
@@ -45,6 +46,7 @@ export class BookService {
     return res;
   }
 
+  // findBYId
   async findById(id: string): Promise<Book> {
     const isValidid = mongoose.isValidObjectId(id);
 
@@ -58,7 +60,8 @@ export class BookService {
     }
     return book;
   }
-
+ 
+  // updteById
   async updateById(id: string, book: Book): Promise<Book> {
     const res = await this.bookModel.findByIdAndUpdate(id, book, {
       new: true,
