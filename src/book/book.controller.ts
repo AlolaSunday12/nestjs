@@ -95,4 +95,4 @@ export class BookController {
   ) {
     return this.bookService.uploadImages(bookId, files);
   }
-}
+};
