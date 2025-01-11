@@ -11,7 +11,7 @@ export const multerConfig = {
       // Get the file extension
       const fileExt = extname(file.originalname);
 
-      // Remove the extension from the original filename to use the base name
+      // Remove the extension from the original filename to use the base name.
       const baseName = file.originalname.split('.')[0];
 
       // Construct the final filename
