@@ -26,9 +26,9 @@ export class CreateBookDto {
   readonly price: number;
 
   @IsNotEmpty()
-  @IsEnum(Category, { message: 'please type correct Category.' })
+  @IsEnum(Category, { message: 'Please type correct Category.' })
   readonly category: Category;
 
-  @IsEmpty({ message: 'You can not pass user id.' })
+  @IsEmpty({ message: 'You can not pass user Id.' })
   readonly user: User;
 }
