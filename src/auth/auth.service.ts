@@ -15,6 +15,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  // Signup
   async signUp(signUpDto: SignUpDto): Promise<{ token: string }> {
     const { name, email, password, role } = signUpDto;
 
@@ -31,6 +32,7 @@ export class AuthService {
     return { token };
   }
 
+  // login
   async login(loginDto: LoginDto): Promise<{ token: string }> {
     const { email, password } = loginDto;
 
