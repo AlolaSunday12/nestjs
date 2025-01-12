@@ -70,11 +70,13 @@ export class BookService {
     return res;
   }
 
+  // Delete by Id
   async deleteById(id: string): Promise<Book> {
     const res = await this.bookModel.findByIdAndDelete(id);
     return res;
   }
 
+  // Upload images
   async uploadImages(bookId: string, files: Array<Express.Multer.File>) {
     const book = await this.bookModel.findById(bookId);
 
