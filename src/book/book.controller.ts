@@ -51,6 +51,7 @@ export class BookController {
     return this.bookService.create(book, req.user);
   }
 
+  // Get book by Id
   @Get(':id')
   async getBook(
     @Param('id')
@@ -59,6 +60,7 @@ export class BookController {
     return this.bookService.findById(id);
   }
 
+  // Update book by Id
   @Put(':id')
   async updateBook(
     @Param('id')
