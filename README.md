@@ -60,29 +60,29 @@ $ npm run test:cov
 
 ## Routes
 
-# Post Routes for registration
-$ /auth/signup
+# POST Routes for registration
+$ http://localhost:3000/auth/signup
 
-# Get Routes for login
-$ /auth/login
+# GET Routes for login
+$ http://localhost:3000/auth/login
 
-# Post Routes to post contents of the books to database
-$ /books
+# POST Routes to post contents of the books to database
+$ http://localhost:3000/books
 
-# Get Routes to retrieve contents of the books in database
-$ /books
+# GET Routes to retrieve contents of the books in database
+$ http://localhost:3000/books
 
-# Put Routes to update the contents of a single book in database
-$ /books/:id
+# PUT Routes to update the contents of a single book in database
+$ http://localhost:3000/books/:id
 
-# Get Routes to get the contents of a single book
-$ /books/:id
+# GET Routes to get the contents of a single book
+$ http://localhost:3000/books/:id
 
-# Delete Routes to deletes contents of a single book
-$ /books/:id
+# DELETE Routes to deletes contents of a single book
+$ http://localhost:3000/books/:id
 
-# Put Routes to update a book with images
-$ /books/upload/:id
+# PUT Routes to update a book with images
+$ http://localhost:3000/books/upload/:id
 
 
 ```
